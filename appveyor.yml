@@ -4,6 +4,8 @@ image: Visual Studio 2017
 
 before_build:
   - choco install dotnetcore-sdk
+  - choco install opencover.portable
+  - choco install codecov
   - dotnet restore
 
 build_script:
@@ -11,3 +13,7 @@ build_script:
 
 test_script:
   - dotnet test tests/Caishen.Tests/Caishen.Tests.csproj
+  - OpenCover.Console.exe -register:user -target:"dotnet.exe" -targetargs:"test \"tests/Caishen.Tests/Caishen.Tests.csproj\" --configuration Debug --no-build" -filter:"+[Caishen*]* -[Caishen.Tests*]* -[Caishen.Benchmarks*]*" -output:".\coverage.xml" -oldStyle
+after_test:
+  - codecov -f ".\coverage.xml"
+  
