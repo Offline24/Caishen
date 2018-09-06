@@ -15,7 +15,7 @@ namespace Caishen.Benchmarks
         private static void Main()
         {
             var config = ManualConfig.Create(DefaultConfig.Instance)
-                .With(Job.Clr, Job.Core)
+                .With(Job.Core)
                 .With(TargetMethodColumn.Method, StatisticColumn.Max, RankColumn.Arabic)
                 .With(CsvExporter.Default, HtmlExporter.Default)
                 .With(ConsoleLogger.Default)

@@ -2,9 +2,9 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <Configurations>Release</Configurations>
+        <Configurations>Release;Debug</Configurations>
         <Platforms>AnyCPU</Platforms>
-        <TargetFrameworks>net471;netcoreapp2.0</TargetFrameworks>
+        <TargetFramework>netcoreapp2.1</TargetFramework>
     </PropertyGroup>
 
     <ItemGroup>
