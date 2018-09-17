@@ -7,17 +7,24 @@ namespace Caishen
     {
         internal CaishenExceptionReason Reason { get; }
 
-        public static CaishenException ProxyFactoryNonInterface()
+        internal static CaishenException ProxyFactoryNonInterface()
         {
             return new CaishenException(
                 CaishenExceptionReason.CannotCreateProxyForNonInterface,
                 "TODO");
         }
 
-        public static CaishenException UnderlyingObjectIsNull()
+        internal static CaishenException UnderlyingObjectIsNull()
         {
             return new CaishenException(
                 CaishenExceptionReason.UnderlyingObjectIsNull,
+                "TODO");
+        }
+        
+        internal static CaishenException InvalidArgumentExpression()
+        {
+            return new CaishenException(
+                CaishenExceptionReason.InvalidArgumentExpression,
                 "TODO");
         }
 
