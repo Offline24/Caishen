@@ -1,7 +1,6 @@
 using System;
 using Caishen.Internals;
 
-
 namespace Caishen
 {
     public class CaishenException : Exception

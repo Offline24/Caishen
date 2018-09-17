@@ -22,8 +22,4 @@
       <ProjectReference Include="..\..\src\Caishen\Caishen.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="UsageTests" />
-    </ItemGroup>
-
 </Project>
