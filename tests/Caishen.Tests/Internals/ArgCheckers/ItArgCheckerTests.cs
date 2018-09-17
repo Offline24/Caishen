@@ -1,5 +1,7 @@
 using Caishen.Internals.ArgCheckers;
 using Xunit;
+// ReSharper disable ExpressionIsAlwaysNull
+// ReSharper disable RedundantExplicitNullableCreation
 
 namespace Caishen.Tests.Internals.ArgCheckers
 {
