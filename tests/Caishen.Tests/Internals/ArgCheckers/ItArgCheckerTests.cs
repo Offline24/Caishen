@@ -102,5 +102,19 @@ namespace Caishen.Tests.Internals.ArgCheckers
             // Then
             Assert.False(result);
         }
+        
+        [Fact]
+        public void MatchReturnTrueForNullableNull()
+        {
+            // Given
+            int? argument = null;
+            var sut = new ItArgChecker(null);
+
+            // When
+            var result = sut.Match(argument);
+            
+            // Then
+            Assert.True(result);
+        }
     }
 }
