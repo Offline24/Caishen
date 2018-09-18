@@ -1,4 +1,4 @@
-using Caishen.Internals.ProxyFactory;
+using Caishen.Internals.ProxyFactories;
 using Caishen.Tests.TestUtilities;
 using Xunit;
 

@@ -3,7 +3,7 @@ using System.Linq;
 using System.Reflection;
 using Castle.DynamicProxy;
 
-namespace Caishen.Internals.ProxyFactory
+namespace Caishen.Internals.ProxyFactories
 {
     internal class CastleCoreProxyFactory<TInterface> : IProxyFactory<TInterface> where TInterface : class
     {

@@ -1,4 +1,4 @@
-using Caishen.Internals.ProxyFactory;
+using Caishen.Internals.ProxyFactories;
 
 namespace Caishen.Benchmarks.BenchmarkUtilies
 {

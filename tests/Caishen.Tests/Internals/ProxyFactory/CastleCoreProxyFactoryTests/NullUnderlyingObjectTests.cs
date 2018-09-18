@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using Caishen.Internals;
-using Caishen.Internals.ProxyFactory;
+using Caishen.Internals.ProxyFactories;
 using Xunit;
 
 namespace Caishen.Tests.Internals.ProxyFactory.CastleCoreProxyFactoryTests

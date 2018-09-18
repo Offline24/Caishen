@@ -1,7 +1,7 @@
 using System;
 using System.Reflection;
 
-namespace Caishen.Internals.ProxyFactory
+namespace Caishen.Internals.ProxyFactories
 {
     public interface IInvocation
     {

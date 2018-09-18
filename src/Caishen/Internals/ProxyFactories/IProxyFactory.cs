@@ -1,4 +1,4 @@
-namespace Caishen.Internals.ProxyFactory
+namespace Caishen.Internals.ProxyFactories
 {
     internal interface IProxyFactory<T> where T : class
     {
