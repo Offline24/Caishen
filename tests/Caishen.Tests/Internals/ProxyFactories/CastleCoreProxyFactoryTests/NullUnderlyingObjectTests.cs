@@ -4,7 +4,7 @@ using Caishen.Internals;
 using Caishen.Internals.ProxyFactories;
 using Xunit;
 
-namespace Caishen.Tests.Internals.ProxyFactory.CastleCoreProxyFactoryTests
+namespace Caishen.Tests.Internals.ProxyFactories.CastleCoreProxyFactoryTests
 {
     public class NullUnderlyingObjectTests
     {

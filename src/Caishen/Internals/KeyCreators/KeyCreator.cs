@@ -15,7 +15,10 @@ namespace Caishen.Internals.KeyCreators
             new Sha256HashAlgorithm(), 
             new Base64StringEncoder());
         
-        public KeyCreator(IArgumentSerializer argumentSerializer, IHashAlgorithm hashAlgorithm, IStringEncoder stringEncoder)
+        private KeyCreator(
+            IArgumentSerializer argumentSerializer,
+            IHashAlgorithm hashAlgorithm,
+            IStringEncoder stringEncoder)
         {
             _argumentSerializer = argumentSerializer;
             _hashAlgorithm = hashAlgorithm;

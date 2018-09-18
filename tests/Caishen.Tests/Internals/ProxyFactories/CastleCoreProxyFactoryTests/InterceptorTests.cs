@@ -2,7 +2,7 @@ using Caishen.Internals.ProxyFactories;
 using Caishen.Tests.TestUtilities;
 using Xunit;
 
-namespace Caishen.Tests.Internals.ProxyFactory.CastleCoreProxyFactoryTests
+namespace Caishen.Tests.Internals.ProxyFactories.CastleCoreProxyFactoryTests
 {
     public class InterceptorTests
     {

@@ -2,7 +2,7 @@ using BenchmarkDotNet.Attributes;
 using Caishen.Benchmarks.BenchmarkUtilies;
 using Caishen.Internals.ProxyFactories;
 
-namespace Caishen.Benchmarks.Internals.ProxyFactory
+namespace Caishen.Benchmarks.Internals.ProxyFactories
 {
     public class ProxyFactoryMethodCallingBenchmarks
     {
