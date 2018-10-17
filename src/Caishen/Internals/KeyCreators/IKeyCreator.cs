@@ -1,7 +1,9 @@
+using System.Reflection;
+
 namespace Caishen.Internals.KeyCreators
 {
     public interface IKeyCreator
     {
-        string CreateKey(object[] arguments);
+        string CreateKey(MemberInfo memberInfo, object[] arguments);
     }
 }
