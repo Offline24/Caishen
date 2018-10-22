@@ -7,20 +7,17 @@ namespace Caishen.Internals.CollectionsWithCallMatcher
 {
     internal class CollectionWithCallMatcher<TItem> : ICollectionWithCallMatcher<TItem>
     {
-        private readonly TItem _defaultValue;
         private readonly Dictionary<MethodInfo, (ISingleMethodCallChecker checker, TItem item)[]> _data;
 
         public CollectionWithCallMatcher(
-            TItem defaultValue,
             IEnumerable<(MethodInfo methodInfo, ISingleMethodCallChecker checker, TItem item)> items)
         {
-            _defaultValue = defaultValue;
             _data = items
                 .GroupBy(x => x.methodInfo, x => (x.checker, x.item))
                 .ToDictionary(x => x.Key, x => x.ToArray());
         }
         
-        public TItem FindMatchingItem(MethodInfo methodInfo, object[] arguments)
+        public IEnumerable<TItem> FindMatchingItems(MethodInfo methodInfo, object[] arguments)
         {
             if (_data.ContainsKey(methodInfo))
             {
@@ -30,12 +27,10 @@ namespace Caishen.Internals.CollectionsWithCallMatcher
                     var checkerWithItem = checkersWithItems[i];
                     if (checkerWithItem.checker.DoesCallMatch(arguments))
                     {
-                        return checkerWithItem.item;
+                        yield return checkerWithItem.item;
                     }
                 }
             }
-
-            return _defaultValue;
         }
     }
 }

@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Reflection;
 using Caishen.Internals.CallCheckers;
 using Caishen.Internals.CollectionsWithCallMatcher;
@@ -16,48 +17,49 @@ namespace Caishen.Tests.Internals.CollectionsWithCallMatcher
             typeof(TestClassWithFunctions).GetMethod(nameof(TestClassWithFunctions.GetIntWithParameters));
         
         [Fact]
-        public void FindMatchingItemEmptyItems()
+        public void FindMatchingItems_EmptyItems()
         {
             // Given
-            var defaultValue = 1;
             var items = new (MethodInfo methodInfo, ISingleMethodCallChecker checker, int item)[]{};
-            var sut = new CollectionWithCallMatcher<int>(defaultValue, items);
+            var sut = new CollectionWithCallMatcher<int>(items);
 
             // When
-            var result = sut.FindMatchingItem(GetStringWithParametersMethodInfo, new object[] { });
+            var result = sut.FindMatchingItems(GetStringWithParametersMethodInfo, new object[] { });
             
             // Then
-            Assert.Equal(defaultValue, result);
+            Assert.Empty(result);
         }
         
         [Fact]
-        public void FindMatchingItemOneItemPerMethod()
+        public void FindMatchingItems_OneItemPerMethod()
         {
             // Given
-            var defaultValue = 1;
             var items = new (MethodInfo methodInfo, ISingleMethodCallChecker checker, int item)[]
             {
                 (GetStringWithParametersMethodInfo, new MockSingleMethodCallChecker(true), 2),
                 (GetIntNoParametersMethodInfo, new MockSingleMethodCallChecker(true), 3),
             };
-            var sut = new CollectionWithCallMatcher<int>(defaultValue, items);
+            var sut = new CollectionWithCallMatcher<int>(items);
 
             // When
-            var result1 = sut.FindMatchingItem(GetStringWithParametersMethodInfo, new object[] { });
-            var result2 = sut.FindMatchingItem(GetIntNoParametersMethodInfo, new object[] { });
-            var result3 = sut.FindMatchingItem(GetIntWithParametersMethodInfo, new object[] { });
+            var result1 = sut.FindMatchingItems(GetStringWithParametersMethodInfo, new object[] { });
+            var result2 = sut.FindMatchingItems(GetIntNoParametersMethodInfo, new object[] { });
+            var result3 = sut.FindMatchingItems(GetIntWithParametersMethodInfo, new object[] { });
             
             // Then
-            Assert.Equal(2, result1);
-            Assert.Equal(3, result2);
-            Assert.Equal(1, result3);
+            var value1 = Assert.Single(result1);
+            Assert.Equal(2, value1);
+            
+            var value2 = Assert.Single(result2);
+            Assert.Equal(3, value2);
+
+            Assert.Empty(result3);
         }
         
         [Fact]
-        public void FindMatchingItemMultipleItemsPerMethod()
+        public void FindMatchingItems_MultipleItemsPerMethodButOnlyOneMatching()
         {
             // Given
-            var defaultValue = 1;
             var items = new (MethodInfo methodInfo, ISingleMethodCallChecker checker, int item)[]
             {
                 (GetStringWithParametersMethodInfo, new MockSingleMethodCallChecker(false), 2),
@@ -65,20 +67,45 @@ namespace Caishen.Tests.Internals.CollectionsWithCallMatcher
                 (GetStringWithParametersMethodInfo, new MockSingleMethodCallChecker(true), 4),
                 (GetStringWithParametersMethodInfo, new MockSingleMethodCallChecker(false), 5),
             };
-            var sut = new CollectionWithCallMatcher<int>(defaultValue, items);
+            var sut = new CollectionWithCallMatcher<int>(items);
 
             // When
-            var result = sut.FindMatchingItem(GetStringWithParametersMethodInfo, new object[] { });
+            var result = sut.FindMatchingItems(GetStringWithParametersMethodInfo, new object[] { });
             
             // Then
-            Assert.Equal(4, result);
+            var value = Assert.Single(result);
+            Assert.Equal(4, value);
         }
         
         [Fact]
-        public void FindMatchingItemDefaultValue()
+        public void FindMatchingItems_MultipleItemsPerMethod()
         {
             // Given
-            var defaultValue = 1;
+            var items = new (MethodInfo methodInfo, ISingleMethodCallChecker checker, int item)[]
+            {
+                (GetStringWithParametersMethodInfo, new MockSingleMethodCallChecker(false), 2),
+                (GetStringWithParametersMethodInfo, new MockSingleMethodCallChecker(true), 3),
+                (GetStringWithParametersMethodInfo, new MockSingleMethodCallChecker(true), 4),
+                (GetStringWithParametersMethodInfo, new MockSingleMethodCallChecker(false), 5),
+                (GetStringWithParametersMethodInfo, new MockSingleMethodCallChecker(true), 6),
+
+            };
+            var sut = new CollectionWithCallMatcher<int>(items);
+
+            // When
+            var result = sut.FindMatchingItems(GetStringWithParametersMethodInfo, new object[] { }).ToList();
+            
+            // Then
+            Assert.Equal(3, result.Count);
+            Assert.Contains(3, result);
+            Assert.Contains(4, result);
+            Assert.Contains(6, result);
+        }
+        
+        [Fact]
+        public void FindMatchingItems_NoneMatch()
+        {
+            // Given
             var items = new (MethodInfo methodInfo, ISingleMethodCallChecker checker, int item)[]
             {
                 (GetStringWithParametersMethodInfo, new MockSingleMethodCallChecker(false), 2),
@@ -86,13 +113,13 @@ namespace Caishen.Tests.Internals.CollectionsWithCallMatcher
                 (GetStringWithParametersMethodInfo, new MockSingleMethodCallChecker(false), 4),
                 (GetStringWithParametersMethodInfo, new MockSingleMethodCallChecker(false), 5),
             };
-            var sut = new CollectionWithCallMatcher<int>(defaultValue, items);
+            var sut = new CollectionWithCallMatcher<int>(items);
 
             // When
-            var result = sut.FindMatchingItem(GetStringWithParametersMethodInfo, new object[] { });
+            var result = sut.FindMatchingItems(GetStringWithParametersMethodInfo, new object[] { });
             
             // Then
-            Assert.Equal(defaultValue, result);
+            Assert.Empty(result);
         }
 
         private class MockSingleMethodCallChecker : ISingleMethodCallChecker
